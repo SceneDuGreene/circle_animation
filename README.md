@@ -132,6 +132,7 @@ def animate(i):
     r2dot = np.array([[x2_0 + d_x],[y2_0 + d_y]]) #moving origin2
     centroid_x = r2dot[0] ; centroid_y = r2dot[1] #centroid point
     centroid_path_x.append(r2dot[0]);centroid_path_y.append(r2dot[1]) #path 
+    ax.set_title("Kinematic Animation vx = {}, vy = {}".format(v_x,v_y))
 
 
     n = 7 #length of chemtrail
@@ -163,7 +164,7 @@ def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
 
 anim = animation.FuncAnimation(fig, animate, init_func=init,
                                frames=frames, interval=interval, blit=True)
-plt.title("Kinematic Animation")
+#plt.title("Kinematic Animation")
 plt.xlabel("time (s)"); plt.ylabel("Amplitude (m)")
 
 f = r"c://Users/mike3/Desktop/circle_animation.gif"
@@ -173,3 +174,8 @@ anim.save(f, writer=writergif)
 
 plt.show()
   ```
+## Example Output
+  <p align="center"><img src="https://github.com/SceneDuGreene/circle_animation/blob/main/circle_animation.gif" title="circle_animate"> </p>
+
+  ## Exmaple Output - Velocity modifications
+  <p align="center"><img src="https://github.com/SceneDuGreene/circle_animation/blob/main/EXAMPLE_MODIFICATIONS_circle_animation.gif" title="circle_animate_Vmods"></p>
