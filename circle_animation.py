@@ -35,11 +35,11 @@ def animate(i):
 # Draw circles at each frame i over entire animation
     res = 100 # Resolution of shape. keep between 50->200
     x_0 = -0.0 ; y_0 = -0.5 # initial x,y position
-    v_x = i/20 ; v_y= 0  #initial velocity that cause motion
-    x1, y1, x1_0, y1_0 = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
-    x2, y2, x2_0, y2_0 = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
-    r1dot = np.array([[x1_0 + v_x],[y1_0 + v_y]]) #moving origin1
-    r2dot = np.array([[x2_0 + v_x],[y2_0 + v_y]]) #moving origin2
+    v_x = 1/20 ; v_y= 0  #initial velocity that cause motion
+    x1, y1, x1_0, y1_0, d_x, d_y = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
+    x2, y2, x2_0, y2_0, d_x, d_y = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
+    r1dot = np.array([[x1_0 + d_x],[y1_0 + d_y]]) #moving origin1
+    r2dot = np.array([[x2_0 + d_x],[y2_0 + d_y]]) #moving origin2
     centroid_x = r2dot[0] ; centroid_y = r2dot[1] #centroid point
     centroid_path_x.append(r2dot[0]);centroid_path_y.append(r2dot[1]) #path 
 
@@ -66,9 +66,10 @@ def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
     theta = np.linspace(0, 2*np.pi,res) 
     # the radius of the circle
     # compute cartesian x1 and x2
-    circlex1 = r*np.cos(theta) + x_0 + v_x 
-    circley1 = r*np.sin(theta) + y_0 + v_y
-    return circlex1, circley1, x_0, y_0
+    d_x = v_x*i ; d_y = v_y*i #calculate change in displacement
+    circlex1 = r*np.cos(theta) + x_0 + d_x 
+    circley1 = r*np.sin(theta) + y_0 + d_y
+    return circlex1, circley1, x_0, y_0, d_x, d_y
 
 anim = animation.FuncAnimation(fig, animate, init_func=init,
                                frames=frames, interval=interval, blit=True)
