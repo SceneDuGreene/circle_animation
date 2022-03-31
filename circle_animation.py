@@ -34,11 +34,11 @@ def animate(i):
 # Draw circles at each frame i over entire animation
     res = 100 # Resolution of shape. keep between 50->200
     x_0 = -0.0 ; y_0 = -0.5 # initial x,y position
-    vx = i/20 ; vy= 0  #forcing functions that cause motion
-    x1, y1, x1_0, y1_0 = circle(1,i,x_0,y_0,vx,vy,res)  #r between 0->1
-    x2, y2, x2_0, y2_0 = circle(0.5,i,x_0,y_0,vx,vy,res) #r between 0->1
-    r1dot = np.array([[x1_0 + vx],[y1_0 + vy]]) #moving origin1
-    r2dot = np.array([[x2_0 + vx],[y2_0 + vy]]) #moving origin2
+    v_x = i/20 ; v_y= 0  #forcing functions that cause motion
+    x1, y1, x1_0, y1_0 = circle(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
+    x2, y2, x2_0, y2_0 = circle(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
+    r1dot = np.array([[x1_0 + v_x],[y1_0 + v_y]]) #moving origin1
+    r2dot = np.array([[x2_0 + v_x],[y2_0 + v_y]]) #moving origin2
     centroid_x = r2dot[0] ; centroid_y = r2dot[1] #centroid point
     centroid_path_x.append(r2dot[0]);centroid_path_y.append(r2dot[1]) #path 
 
@@ -60,13 +60,13 @@ def animate(i):
     return object1, object2, centroid, centroid_path, time_tracker
 
     
-def circle(r,i,x_0,y_0,vx,vy,res): #r between 0->1
+def circle(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
     # theta goes from 0 to 2pi
     theta = np.linspace(0, 2*np.pi,res) 
     # the radius of the circle
     # compute cartesian x1 and x2
-    circlex1 = r*np.cos(theta) + x_0 + vx #problems with trnalsation!
-    circley1 = r*np.sin(theta) + y_0 + vy
+    circlex1 = r*np.cos(theta) + x_0 + v_x #problems with trnalsation!
+    circley1 = r*np.sin(theta) + y_0 + v_y
     return circlex1, circley1, x_0, y_0
 
 centroid_path_x = []; centroid_path_y = [] #initialize centroid_path storage
