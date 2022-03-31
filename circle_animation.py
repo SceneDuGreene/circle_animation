@@ -18,7 +18,8 @@ object2, = ax.plot([], [], lw=2)
 centroid,  = ax.plot([], [],'ko', lw=100) #centroid2 tracking
 centroid_path,  = ax.plot([], [],'k', lw=2) #centroid2 path linear vel
 time_tracker, = ax.plot([], [],'r', lw=2) #track time on t axis
-
+centroid_path_x = []; centroid_path_y = [] #initialize centroid_path storage
+frames = 30; interval = 15 #Constants for animate function
 
 # initialization function: plot the background of each frame
 def init():
@@ -69,14 +70,10 @@ def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
     circley1 = r*np.sin(theta) + y_0 + v_y
     return circlex1, circley1, x_0, y_0
 
-centroid_path_x = []; centroid_path_y = [] #initialize centroid_path storage
-frames = 30; interval = 15 #Constants for animate function
-
 anim = animation.FuncAnimation(fig, animate, init_func=init,
                                frames=frames, interval=interval, blit=True)
 plt.title("Kinematic Animation")
 plt.xlabel("time (s)"); plt.ylabel("Amplitude (m)")
-
 
 f = r"c://Users/mike3/Desktop/circle_animation.gif"
 # f = r"c://Users/mike3/OneDrive/Desktop/ball_across_screen.gif"
