@@ -159,8 +159,7 @@ anim = animation.FuncAnimation(fig, animate, init_func=init,
 plt.title("Kinematic Animation")
 plt.xlabel("time (s)"); plt.ylabel("Amplitude (m)")
 
-f = r"c://Users/mike3/Desktop/circle_animation.gif"
-# f = r"c://Users/mike3/OneDrive/Desktop/ball_across_screen.gif"
+f = r"c://Users/[INPUT__USER]/Desktop/circle_animation.gif"
 writergif = animation.PillowWriter(fps=15)
 anim.save(f, writer=writergif)
 
