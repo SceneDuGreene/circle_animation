@@ -35,7 +35,7 @@ def animate(i):
 # Draw circles at each frame i over entire animation
     res = 100 # Resolution of shape. keep between 50->200
     x_0 = -0.0 ; y_0 = -0.5 # initial x,y position
-    v_x = 1/20 ; v_y= 0  #initial velocity that cause motion
+    v_x = 1/20 ; v_y= 1/20  #initial velocity that cause motion
     x1, y1, x1_0, y1_0, d_x, d_y = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
     x2, y2, x2_0, y2_0, d_x, d_y = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
     r1dot = np.array([[x1_0 + d_x],[y1_0 + d_y]]) #moving origin1
