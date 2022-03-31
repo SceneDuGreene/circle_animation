@@ -20,17 +20,19 @@ Let's break up the **CIRCLE_ANIM** function into two parts : *Input* vs *Output*
 >*Input6*) Initial velocity_horiztonal, v_x: initial horizontal velocity, v_x   <br />
 >*Input7*) Initial velocity_vertical, v_y: initial vertical velocity, v_y    <br />
 
-***Output - 4 variables will be returned:***
+***Output - 6 variables will be returned:***
 ```Python
-return circle_x1, circle_y1, x_0, y_0 #return values for later use
+    return circlex1, circley1, x_0, y_0, d_x, d_y 
 ```
 >*Output1*) Circle x-coordinates, x1: plot with y1 to display circle in cartesian coordinates  <br />
 >*Output2*) Circle y-coordinates, y1: plot with x1 to display circle in cartesian coordinates <br />
 >*Output3*) Initial Position, x1_0: Horizontal offset from origin <br />
 >*Output4*) Initial Position, y1_0: Vertical offset from origin <br />
+>*Output5*) Change in Position, d_x: Horizontal change in position<br />
+>*Output6*) Change in Position, d_y: Vertical change in position <br />
 
  # Background on Equations Used
- In Kinematics, if we know the initial velocity, (v_x, v_y) of an object, we can estimat
+ In Kinematics, if we know the initial velocity, (v_x, v_y) of an object, we can estimate
  where it will be (Δx, Δy) at an instance of time, Δt.
  <p align="center"> <img src= "https://latex.codecogs.com/svg.image?\Delta&space;x=v&space;\Delta&space;t&space;&space;" title = "dx=vdt" </p> 
   
@@ -38,14 +40,16 @@ The **CIRCLE_ANIM** function is used to calculate the (x,y) values of a cirlce a
 The function can be seen below
   :
  ```Python
-def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
+  d def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
     # theta goes from 0 to 2pi
     theta = np.linspace(0, 2*np.pi,res) 
     # the radius of the circle
     # compute cartesian x1 and x2
-    circlex1 = r*np.cos(theta) + x_0 + v_x #problems with trnalsation!
-    circley1 = r*np.sin(theta) + y_0 + v_y
-    return circlex1, circley1, x_0, y_0
+    d_x = v_x*i ; d_y = v_y*i #calculate change in displacement
+    circlex1 = r*np.cos(theta) + x_0 + d_x 
+    circley1 = r*np.sin(theta) + y_0 + d_y
+    return circlex1, circley1, x_0, y_0, d_x, d_y
+
   ```
   
 ## Getting Started
@@ -56,11 +60,11 @@ def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
 # Draw circles at each frame i over entire animation
     res = 100 # Resolution of shape. keep between 50->200
     x_0 = -0.0 ; y_0 = -0.5 # initial x,y position
-    v_x = i/20 ; v_y= 0  #initial velocity that cause motion
-    x1, y1, x1_0, y1_0 = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
-    x2, y2, x2_0, y2_0 = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
-    r1dot = np.array([[x1_0 + v_x],[y1_0 + v_y]]) #moving origin1
-    r2dot = np.array([[x2_0 + v_x],[y2_0 + v_y]]) #moving origin2
+    v_x = 1/20 ; v_y= 0  #initial velocity that cause motion
+    x1, y1, x1_0, y1_0, d_x, d_y = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
+    x2, y2, x2_0, y2_0, d_x, d_y = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
+    r1dot = np.array([[x1_0 + d_x],[y1_0 + d_y]]) #moving origin1
+    r2dot = np.array([[x2_0 + d_x],[y2_0 + d_y]]) #moving origin2
     centroid_x = r2dot[0] ; centroid_y = r2dot[1] #centroid point
     centroid_path_x.append(r2dot[0]);centroid_path_y.append(r2dot[1]) #path 
   ```
