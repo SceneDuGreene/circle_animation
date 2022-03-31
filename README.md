@@ -4,7 +4,7 @@ Use python and MatplotLib Module to create circle animation and save gif to Desk
 <p align="center"><img src="https://github.com/SceneDuGreene/circle_animation/blob/main/circle_animation.gif" title="circle_plot"> </p>
 
 # Overview
-This PYTHON program is used to animate a circle at a specified radius, resolution, initial position (x_0,y_0), and initial velocity (v_x,v_y) . <br />
+This PYTHON program is used to animate a circle at a specified radius, resolution, initial position (<img src="https://latex.codecogs.com/svg.image?x_0" title = "x_0"> ,<img src="https://latex.codecogs.com/svg.image?y_0" title = "y_0"> ), and initial velocity (<img src="https://latex.codecogs.com/svg.image?v_x" title = "v_x">,<img src="https://latex.codecogs.com/svg.image?v_y" title = "v_y">) . <br />
 Let's break up the **CIRCLE_ANIM** function into two parts : *Input* vs *Output*
 
 ***Input - 7 variables required:***
@@ -32,15 +32,17 @@ Let's break up the **CIRCLE_ANIM** function into two parts : *Input* vs *Output*
 >*Output6*) Change in Position, d_y: Vertical change in position <br />
 
  # Background on Equations Used
- In Kinematics, if we know the initial velocity, (v_x, v_y) of an object, we can estimate
+ In Kinematics, if we know the centroid initial velocity, ( <img src="https://latex.codecogs.com/svg.image?v_x" title = "v_x">, <img src="https://latex.codecogs.com/svg.image?v_y" title = "v_y">) of an object, we can estimate
  where it will be (Δx, Δy) at an instance of time, Δt.
- <p align="center"> <img src= "https://latex.codecogs.com/svg.image?\Delta&space;x=v&space;\Delta&space;t&space;&space;" title = "dx=vdt" </p> 
+ <p align="center"> <img src= "https://latex.codecogs.com/svg.image?\Delta&space;x=v&space;\Delta&space;t&space;&space;" title = "dx=vdt" </p> <br />
+ <p align="left"> To calculate the incremental position, <img src="https://latex.codecogs.com/svg.image?x_i" title = "x_i">, we add the change in displacement to the initial position,  <img src="https://latex.codecogs.com/svg.image?x_0" title = "x_0"> as time increases. </p>
+ <p align="center"> <img src= "https://latex.codecogs.com/svg.image?x_i&space;=&space;x_o&space;&plus;&space;\Delta&space;x" title = "x + dx" </p>
   
-The **CIRCLE_ANIM** function is used to calculate the (x,y) values of a cirlce at Frame, i <br />
+The **CIRCLE_ANIM** function is used to calculate the (<img src="https://latex.codecogs.com/svg.image?x_i" title = "x_i">,<img src="https://latex.codecogs.com/svg.image?y_i" title = "y_i">) values of a circle at Frame, i <br />
 The function can be seen below
   :
  ```Python
-  d def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
+  def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
     # theta goes from 0 to 2pi
     theta = np.linspace(0, 2*np.pi,res) 
     # the radius of the circle
@@ -54,7 +56,7 @@ The function can be seen below
   
 ## Getting Started
   In order to cycle through the Frames, i, we can make use of Matplotlib's ANIMATE function.
-  It is within this function that we call CIRLCE_ANIM to updates (x,y) values of Frames,i
+  It is within this function that we call **CIRCLE_ANIM** to update (x,y) values of Frames, i
  ```Python
   def animate(i):
 # Draw circles at each frame i over entire animation
@@ -68,7 +70,7 @@ The function can be seen below
     centroid_x = r2dot[0] ; centroid_y = r2dot[1] #centroid point
     centroid_path_x.append(r2dot[0]);centroid_path_y.append(r2dot[1]) #path 
   ```
-   ***NOTE*** That in order to use this ANIMATE function, it is neccessary to initilize the objects that we want to plot
+   ***NOTE*** That in order to use this ANIMATE function, it is neccessary to initialize the objects that we want to plot
   ```Python
   #initialize empty plots
   object1, = ax.plot([], [], lw=2)
@@ -92,7 +94,7 @@ The function can be seen below
   
   ## Example Code
   ```Python
-  import numpy as np
+import numpy as np
 import matplotlib.pyplot as plt 
 from matplotlib import animation
 
@@ -123,11 +125,11 @@ def animate(i):
 # Draw circles at each frame i over entire animation
     res = 100 # Resolution of shape. keep between 50->200
     x_0 = -0.0 ; y_0 = -0.5 # initial x,y position
-    v_x = i/20 ; v_y= 0  #initial velocity that cause motion
-    x1, y1, x1_0, y1_0 = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
-    x2, y2, x2_0, y2_0 = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
-    r1dot = np.array([[x1_0 + v_x],[y1_0 + v_y]]) #moving origin1
-    r2dot = np.array([[x2_0 + v_x],[y2_0 + v_y]]) #moving origin2
+    v_x = 1/20 ; v_y= 0  #initial velocity that cause motion
+    x1, y1, x1_0, y1_0, d_x, d_y = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
+    x2, y2, x2_0, y2_0, d_x, d_y = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
+    r1dot = np.array([[x1_0 + d_x],[y1_0 + d_y]]) #moving origin1
+    r2dot = np.array([[x2_0 + d_x],[y2_0 + d_y]]) #moving origin2
     centroid_x = r2dot[0] ; centroid_y = r2dot[1] #centroid point
     centroid_path_x.append(r2dot[0]);centroid_path_y.append(r2dot[1]) #path 
 
@@ -154,16 +156,18 @@ def circle_anim(r,i,x_0,y_0,v_x,v_y,res): #r between 0->1
     theta = np.linspace(0, 2*np.pi,res) 
     # the radius of the circle
     # compute cartesian x1 and x2
-    circlex1 = r*np.cos(theta) + x_0 + v_x 
-    circley1 = r*np.sin(theta) + y_0 + v_y
-    return circlex1, circley1, x_0, y_0
+    d_x = v_x*i ; d_y = v_y*i #calculate change in displacement
+    circlex1 = r*np.cos(theta) + x_0 + d_x 
+    circley1 = r*np.sin(theta) + y_0 + d_y
+    return circlex1, circley1, x_0, y_0, d_x, d_y
 
 anim = animation.FuncAnimation(fig, animate, init_func=init,
                                frames=frames, interval=interval, blit=True)
 plt.title("Kinematic Animation")
 plt.xlabel("time (s)"); plt.ylabel("Amplitude (m)")
 
-f = r"c://Users/[INPUT__USER]/Desktop/circle_animation.gif"
+f = r"c://Users/mike3/Desktop/circle_animation.gif"
+# f = r"c://Users/mike3/OneDrive/Desktop/ball_across_screen.gif"
 writergif = animation.PillowWriter(fps=15)
 anim.save(f, writer=writergif)
 
