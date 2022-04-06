@@ -28,8 +28,8 @@ Let's break up the **CIRCLE_ANIM** function into two parts : *Input* vs *Output*
 >*Output2*) Circle y-coordinates, y1: plot with x1 to display circle in cartesian coordinates <br />
 >*Output3*) Initial Position, x1_0: Horizontal offset from origin <br />
 >*Output4*) Initial Position, y1_0: Vertical offset from origin <br />
->*Output5*) Change in Position, d_x: Horizontal change in position<br />
->*Output6*) Change in Position, d_y: Vertical change in position <br />
+>*Output5*) Change in Position, d_x1: Horizontal change in position<br />
+>*Output6*) Change in Position, d_y1: Vertical change in position <br />
 
  # Background on Equations Used
  In Kinematics, if we know the centroid initial velocity, ( <img src="https://latex.codecogs.com/svg.image?v_x" title = "v_x">, <img src="https://latex.codecogs.com/svg.image?v_y" title = "v_y">) of an object, we can estimate
@@ -63,10 +63,10 @@ The function can be seen below
     res = 100 # Resolution of shape. keep between 50->200
     x_0 = -0.0 ; y_0 = -0.5 # initial x,y position
     v_x = 1/20 ; v_y= 0  #initial velocity that cause motion
-    x1, y1, x1_0, y1_0, d_x, d_y = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
-    x2, y2, x2_0, y2_0, d_x, d_y = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
-    r1dot = np.array([[x1_0 + d_x],[y1_0 + d_y]]) #moving origin1
-    r2dot = np.array([[x2_0 + d_x],[y2_0 + d_y]]) #moving origin2
+    x1, y1, x1_0, y1_0, d_x1, d_y1 = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
+    x2, y2, x2_0, y2_0, d_x2, d_y2 = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
+    r1dot = np.array([[x1_0 + d_x1],[y1_0 + d_y1]]) #moving origin1
+    r2dot = np.array([[x2_0 + d_x2],[y2_0 + d_y2]]) #moving origin2
     centroid_x = r2dot[0] ; centroid_y = r2dot[1] #centroid point
     centroid_path_x.append(r2dot[0]);centroid_path_y.append(r2dot[1]) #path 
   ```
@@ -127,10 +127,10 @@ def animate(i):
     res = 100 # Resolution of shape. keep between 50->200
     x_0 = -0.0 ; y_0 = -0.5 # initial x,y position
     v_x = 1/20 ; v_y= 0  #initial velocity that cause motion
-    x1, y1, x1_0, y1_0, d_x, d_y = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
-    x2, y2, x2_0, y2_0, d_x, d_y = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
-    r1dot = np.array([[x1_0 + d_x],[y1_0 + d_y]]) #moving origin1
-    r2dot = np.array([[x2_0 + d_x],[y2_0 + d_y]]) #moving origin2
+    x1, y1, x1_0, y1_0, d_x1, d_y1 = circle_anim(1,i,x_0,y_0,v_x,v_y,res)  #r between 0->1
+    x2, y2, x2_0, y2_0, d_x2, d_y2 = circle_anim(0.5,i,x_0,y_0,v_x,v_y,res) #r between 0->1
+    r1dot = np.array([[x1_0 + d_x1],[y1_0 + d_y1]]) #moving origin1
+    r2dot = np.array([[x2_0 + d_x2],[y2_0 + d_y2]]) #moving origin2
     centroid_x = r2dot[0] ; centroid_y = r2dot[1] #centroid point
     centroid_path_x.append(r2dot[0]);centroid_path_y.append(r2dot[1]) #path 
     ax.set_title("Kinematic Animation vx = {}, vy = {}".format(v_x,v_y))
